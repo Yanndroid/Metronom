@@ -3,7 +3,10 @@ package de.dylt.yanndroid.metronom;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
@@ -17,6 +20,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,15 +32,14 @@ public class MainActivity extends AppCompatActivity {
 
     CheckBox play;
     CheckBox settings;
-
     TextView counter;
-
 
     Timer timer;
     Vibrator vibrator;
+    SoundPool soundPool;
+    int soundId;
 
     int beatcounter;
-
     SharedPreferences sharedPreferences;
 
 
@@ -45,7 +48,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         sharedPreferences = getSharedPreferences("settings", Activity.MODE_PRIVATE);
+
+        setLanguage();
 
         menuexpanded = true;
         fab = findViewById(R.id.fab);
@@ -57,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         beatcounter = 0;
         counter = findViewById(R.id.counter);
+        soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+        soundId = soundPool.load(getBaseContext(), R.raw.beat, 1);
+        timer = new Timer();
 
 
         settings.setOnClickListener(new View.OnClickListener() {
@@ -108,15 +118,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void run() {
 
                                     if (options.get("sound")) {
-                                        final MediaPlayer mp = MediaPlayer.create(getBaseContext(), R.raw.beat);
-                                        mp.start();
-                                        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                                            public void onCompletion(MediaPlayer mp) {
-                                                mp.release();
-                                            }
-
-                                            ;
-                                        });
+                                        soundPool.play(soundId, 1, 1, 0, 0, 1);
                                     }
 
                                     beatcounter++;
@@ -165,6 +167,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
+        soundPool.release();
+        soundPool = null;
+    }
+
     public void setDarkMode() {
         switch (sharedPreferences.getInt("theme_spinner", 0)) {
             case 0:
@@ -178,4 +188,32 @@ public class MainActivity extends AppCompatActivity {
                 return;
         }
     }
+
+    public void setLanguage(){
+        switch (sharedPreferences.getInt("language_spinner", 0)) {
+                    case 0:
+                        setLocale(MainActivity.this, "");
+                        return;
+                    case 1:
+                        setLocale(MainActivity.this, "en");
+                        return;
+                    case 2:
+                        setLocale(MainActivity.this, "de");
+                        return;
+                    case 3:
+                        setLocale(MainActivity.this, "fr");
+                        return;
+        }
+
+    }
+
+    public static void setLocale(Activity activity, String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+        Resources resources = activity.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+    }
+
 }

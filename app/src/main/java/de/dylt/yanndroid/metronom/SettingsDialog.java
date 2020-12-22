@@ -2,6 +2,7 @@ package de.dylt.yanndroid.metronom;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -26,6 +27,8 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import static de.dylt.yanndroid.metronom.R.string.need_restart;
 
 public class SettingsDialog extends BottomSheetDialogFragment {
 
@@ -61,10 +64,10 @@ public class SettingsDialog extends BottomSheetDialogFragment {
 
         /** language_spinner */
         ArrayList<String> language_options = new ArrayList<>();
-        language_options.add("System");
-        language_options.add("English");
-        language_options.add("German");
-        language_options.add("French");
+        language_options.add(getString(R.string.system));
+        language_options.add(getString(R.string.english));
+        language_options.add(getString(R.string.german));
+        language_options.add(getString(R.string.french));
 
         Spinner language_spinner = dialog.findViewById(R.id.language_spinner);
         language_spinner.setAdapter(new ArrayAdapter<String>(getContext(), R.layout.spinner_layout, language_options));
@@ -81,20 +84,6 @@ public class SettingsDialog extends BottomSheetDialogFragment {
                 }
                 sharedPreferences.edit().putInt("language_spinner", position).commit();
                 language_spinner_selection[0] = position;
-                /*switch (position) {
-                    case 0:
-                        setLocale(SettingsActivity.this, "");
-                        return;
-                    case 1:
-                        setLocale(SettingsActivity.this, "en");
-                        return;
-                    case 2:
-                        setLocale(SettingsActivity.this, "de");
-                        return;
-                    case 3:
-                        setLocale(SettingsActivity.this, "fr");
-                        return;
-                }*/
             }
 
             @Override
@@ -178,7 +167,7 @@ public class SettingsDialog extends BottomSheetDialogFragment {
                         if (Integer.parseInt(s.toString()) > 300) {
                             tempo_text.setText(String.valueOf(300));
                         } else {
-                            tempo_text.setError("20 to 300 only");
+                            tempo_text.setError(getString(R.string.tempo_error));
                         }
 
                     }
@@ -195,9 +184,9 @@ public class SettingsDialog extends BottomSheetDialogFragment {
 
         /** Theme_spinner */
         ArrayList<String> theme_options = new ArrayList<>();
-        theme_options.add("System");
-        theme_options.add("Always");
-        theme_options.add("Never");
+        theme_options.add(getString(R.string.system));
+        theme_options.add(getString(R.string.always));
+        theme_options.add(getString(R.string.never));
 
         Spinner theme_spinner = dialog.findViewById(R.id.theme_spinner);
         theme_spinner.setAdapter(new ArrayAdapter<String>(getContext(), R.layout.spinner_layout, theme_options));
@@ -254,17 +243,9 @@ public class SettingsDialog extends BottomSheetDialogFragment {
 
     }
 
-    public static void setLocale(Activity activity, String languageCode) {
-        Locale locale = new Locale(languageCode);
-        Locale.setDefault(locale);
-        Resources resources = activity.getResources();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
-    }
 
     public void restartapp() {
-        Snackbar.make(getDialog().findViewById(R.id.language_spinner), "Need to restart to apply language", Snackbar.LENGTH_LONG).setAction("Ok", new Snackbarbutton()).show();
+        Snackbar.make(getDialog().findViewById(R.id.language_spinner), need_restart, Snackbar.LENGTH_LONG).setAction(R.string.ok, new Snackbarbutton()).show();
     }
 
     public class Snackbarbutton implements View.OnClickListener {

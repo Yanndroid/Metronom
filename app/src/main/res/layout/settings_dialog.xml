@@ -40,7 +40,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:text="Settings"
+            android:text="@string/settings"
             android:textSize="20dp" />
 
 
@@ -70,7 +70,7 @@
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="2dp"
-                        android:text="General"
+                        android:text="@string/general"
                         android:textStyle="bold" />
 
                     <com.google.android.material.card.MaterialCardView
@@ -96,7 +96,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:text="Beat"
+                                    android:text="@string/beat"
                                     android:textSize="18sp" />
 
                                 <NumberPicker
@@ -138,7 +138,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:text="Tempo"
+                                    android:text="@string/tempo"
                                     android:textSize="18sp" />
 
                                 <EditText
@@ -174,7 +174,7 @@
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="2dp"
-                        android:text="Effects"
+                        android:text="@string/effects"
                         android:textStyle="bold" />
 
                     <com.google.android.material.card.MaterialCardView
@@ -215,14 +215,14 @@
                                         android:ellipsize="marquee"
                                         android:fadingEdge="horizontal"
                                         android:singleLine="true"
-                                        android:text="Vibration"
+                                        android:text="@string/vibration"
                                         android:textSize="18sp" />
 
                                     <com.google.android.material.textview.MaterialTextView
                                         style="?android:attr/textAppearanceSmall"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Vibrate phone for the beat" />
+                                        android:text="@string/vibrate_phone_for_the_beat" />
 
                                 </LinearLayout>
 
@@ -286,14 +286,14 @@
                                         android:ellipsize="marquee"
                                         android:fadingEdge="horizontal"
                                         android:singleLine="true"
-                                        android:text="Sound"
+                                        android:text="@string/sound"
                                         android:textSize="18sp" />
 
                                     <com.google.android.material.textview.MaterialTextView
                                         style="?android:attr/textAppearanceSmall"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Sound Effect for the beat" />
+                                        android:text="@string/sound_effect_for_the_beat" />
 
                                 </LinearLayout>
 
@@ -333,7 +333,7 @@
                         android:layout_marginLeft="24dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="2dp"
-                        android:text="Others"
+                        android:text="@string/others"
                         android:textStyle="bold" />
 
                     <com.google.android.material.card.MaterialCardView
@@ -358,7 +358,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Language"
+                                    android:text="@string/language"
                                     android:textSize="18sp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
@@ -390,7 +390,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Dark mode"
+                                    android:text="@string/dark_mode"
                                     android:textSize="18sp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
