@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/checked"
+        android:drawable="@drawable/ic_pause"
+        android:state_checked="true" />
+
+    <item
+        android:id="@+id/unchecked"
+        android:drawable="@drawable/ic_play"
+        android:state_checked="false" />
+
+    <transition
+        android:drawable="@drawable/selector_play_switch_topause"
+        android:fromId="@id/unchecked"
+        android:toId="@id/checked" />
+
+    <transition
+        android:drawable="@drawable/selector_play_switch_toplay"
+        android:fromId="@+id/checked"
+        android:toId="@+id/unchecked" />
+
+</animated-selector>

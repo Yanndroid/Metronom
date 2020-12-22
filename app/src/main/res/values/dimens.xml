@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="rounded_corner_size">24dp</dimen>
+    <dimen name="sesl_action_button_src_size">24.0dip</dimen>
+</resources>
