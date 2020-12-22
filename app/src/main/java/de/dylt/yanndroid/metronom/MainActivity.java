@@ -1,11 +1,14 @@
 package de.dylt.yanndroid.metronom;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         menuexpanded = true;
 
@@ -89,6 +93,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        setDarkMode();
+
+    }
+
+    public void setDarkMode() {
+        SharedPreferences sharedPreferences = getSharedPreferences("settings", Activity.MODE_PRIVATE);
+        switch (sharedPreferences.getInt("theme_spinner", 0)) {
+            case 0:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                return;
+            case 1:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                return;
+            case 2:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                return;
+        }
     }
 
 
