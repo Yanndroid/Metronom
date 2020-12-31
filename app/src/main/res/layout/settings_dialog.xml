@@ -409,12 +409,42 @@
                     </com.google.android.material.card.MaterialCardView>
 
 
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:id="@+id/download"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="24dp"
+                            android:paddingVertical="15dp">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                style="?android:attr/textAppearanceLarge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Download latest Apk"
+                                android:textSize="18sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_download" />
+
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+
                 </LinearLayout>
-
-
             </androidx.core.widget.NestedScrollView>
-
-
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

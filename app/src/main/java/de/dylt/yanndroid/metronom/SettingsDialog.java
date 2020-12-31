@@ -2,11 +2,12 @@ package de.dylt.yanndroid.metronom;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -26,7 +27,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import static de.dylt.yanndroid.metronom.R.string.need_restart;
 
@@ -237,6 +237,26 @@ public class SettingsDialog extends BottomSheetDialogFragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 sharedPreferences.edit().putBoolean("sound_switch", isChecked).commit();
+            }
+        });
+
+
+        /** Download */
+        View download = dialog.findViewById(R.id.download);
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+                Uri uri = Uri.parse("https://github.com/Yanndroid/Metronom/raw/master/app/release/app-release.apk");
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+                request.setTitle("Metronome Apk");
+                //request.setDescription("Downloading");
+                request.setVisibleInDownloadsUi(true);
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "Metronome.apk");
+                downloadManager.enqueue(request);
+
             }
         });
 

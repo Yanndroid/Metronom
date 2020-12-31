@@ -37,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
     Timer timer;
     Vibrator vibrator;
     SoundPool soundPool;
-    int soundId;
+    int firstSound;
+    int othersSound;
 
     int beatcounter;
     SharedPreferences sharedPreferences;
@@ -47,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
 
         sharedPreferences = getSharedPreferences("settings", Activity.MODE_PRIVATE);
@@ -65,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
         beatcounter = 0;
         counter = findViewById(R.id.counter);
         soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
-        soundId = soundPool.load(getBaseContext(), R.raw.beat, 1);
+        firstSound = soundPool.load(getBaseContext(), R.raw.first, 1);
+        othersSound = soundPool.load(getBaseContext(), R.raw.others, 1);
         timer = new Timer();
 
 
@@ -96,6 +97,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (play.isChecked()) {
                     //play click action
+
+                    //firstSound = soundPool.load(getBaseContext(), R.raw.first, 1);
+                    //othersSound = soundPool.load(getBaseContext(), R.raw.others, 1);
+
                     settings.setChecked(true);
 
                     timer = new Timer();
@@ -117,10 +122,6 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
 
-                                    if (options.get("sound")) {
-                                        soundPool.play(soundId, 1, 1, 0, 0, 1);
-                                    }
-
                                     beatcounter++;
                                     if (beatcounter == beat_picker1 + 1) {
                                         beatcounter = 1;
@@ -128,13 +129,25 @@ public class MainActivity extends AppCompatActivity {
                                     counter.setText(String.valueOf(beatcounter));
 
 
-                                    if (options.get("vibration")) {
-                                        if (beatcounter == beat_picker1) {
+                                    if (beatcounter == 1) {
+                                        if (options.get("sound")) {
+                                            soundPool.play(firstSound, 1, 1, 0, 0, 1);
+                                        }
+
+                                        if (options.get("vibration")) {
                                             vibrator.vibrate((long) 150);
-                                        } else {
+                                        }
+                                    } else {
+                                        if (options.get("sound")) {
+                                            soundPool.play(othersSound, 1, 1, 0, 0, 1);
+                                        }
+
+                                        if (options.get("vibration")) {
                                             vibrator.vibrate((long) 75);
                                         }
                                     }
+
+
                                 }
                             });
                         }
@@ -189,20 +202,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void setLanguage(){
+    public void setLanguage() {
         switch (sharedPreferences.getInt("language_spinner", 0)) {
-                    case 0:
-                        setLocale(MainActivity.this, "");
-                        return;
-                    case 1:
-                        setLocale(MainActivity.this, "en");
-                        return;
-                    case 2:
-                        setLocale(MainActivity.this, "de");
-                        return;
-                    case 3:
-                        setLocale(MainActivity.this, "fr");
-                        return;
+            case 0:
+                setLocale(MainActivity.this, "");
+                return;
+            case 1:
+                setLocale(MainActivity.this, "en");
+                return;
+            case 2:
+                setLocale(MainActivity.this, "de");
+                return;
+            case 3:
+                setLocale(MainActivity.this, "fr");
+                return;
         }
 
     }
