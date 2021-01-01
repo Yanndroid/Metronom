@@ -235,6 +235,9 @@ public class SettingsDialog extends BottomSheetDialogFragment {
 
         SwitchMaterial vib_switch = dialog.findViewById(R.id.vib_switch);
         vib_switch.setChecked(sharedPreferences.getBoolean("vib_switch", false));
+
+        vib_expand.setVisibility(visibility.get(sharedPreferences.getBoolean("vib_switch", false)));
+
         vib_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
