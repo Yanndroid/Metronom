@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -27,12 +29,14 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static de.dylt.yanndroid.metronom.R.string.need_restart;
 
 public class SettingsDialog extends BottomSheetDialogFragment {
 
     boolean seeking = false;
+    Vibrator vibrator;
 
 
     public static SettingsDialog newInstance() {
@@ -61,6 +65,8 @@ public class SettingsDialog extends BottomSheetDialogFragment {
     public void initSettings(Dialog dialog) {
         SharedPreferences sharedPreferences;
         sharedPreferences = getContext().getSharedPreferences("settings", Activity.MODE_PRIVATE);
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+
 
         /** language_spinner */
         ArrayList<String> language_options = new ArrayList<>();
@@ -222,12 +228,18 @@ public class SettingsDialog extends BottomSheetDialogFragment {
 
         /** switches */
 
+        LinearLayout vib_expand = dialog.findViewById(R.id.vib_expand);
+        HashMap<Boolean, Integer> visibility = new HashMap<>();
+        visibility.put(true, View.VISIBLE);
+        visibility.put(false, View.GONE);
+
         SwitchMaterial vib_switch = dialog.findViewById(R.id.vib_switch);
         vib_switch.setChecked(sharedPreferences.getBoolean("vib_switch", false));
         vib_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 sharedPreferences.edit().putBoolean("vib_switch", isChecked).commit();
+                vib_expand.setVisibility(visibility.get(isChecked));
             }
         });
 
@@ -257,6 +269,52 @@ public class SettingsDialog extends BottomSheetDialogFragment {
                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "Metronome.apk");
                 downloadManager.enqueue(request);
 
+            }
+        });
+
+
+        /** Vibration_menu */
+        SeekBar first_beat_bar = dialog.findViewById(R.id.first_beat_bar);
+
+        first_beat_bar.setMax(300);
+        first_beat_bar.setMin(30);
+
+        first_beat_bar.setProgress(sharedPreferences.getInt("first_beat", 150));
+        first_beat_bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                sharedPreferences.edit().putInt("first_beat", progress).commit();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                vibrator.vibrate(seekBar.getProgress());
+            }
+        });
+
+        SeekBar other_beat_bar = dialog.findViewById(R.id.other_beat_bar);
+
+        other_beat_bar.setMax(300);
+        other_beat_bar.setMin(30);
+
+        other_beat_bar.setProgress(sharedPreferences.getInt("other_beat", 75));
+        other_beat_bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                sharedPreferences.edit().putInt("other_beat", progress).commit();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                vibrator.vibrate(seekBar.getProgress());
             }
         });
 

@@ -98,9 +98,6 @@ public class MainActivity extends AppCompatActivity {
                 if (play.isChecked()) {
                     //play click action
 
-                    //firstSound = soundPool.load(getBaseContext(), R.raw.first, 1);
-                    //othersSound = soundPool.load(getBaseContext(), R.raw.others, 1);
-
                     settings.setChecked(true);
 
                     timer = new Timer();
@@ -113,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
                     HashMap<String, Boolean> options = new HashMap<String, Boolean>();
                     options.put("vibration", sharedPreferences.getBoolean("vib_switch", false));
                     options.put("sound", sharedPreferences.getBoolean("sound_switch", false));
+
+                    int first_beat = sharedPreferences.getInt("first_beat", 150);
+                    int other_beat = sharedPreferences.getInt("other_beat", 75);
 
 
                     timer.scheduleAtFixedRate(new TimerTask() {
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                                         }
 
                                         if (options.get("vibration")) {
-                                            vibrator.vibrate((long) 150);
+                                            vibrator.vibrate(first_beat);
                                         }
                                     } else {
                                         if (options.get("sound")) {
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                                         }
 
                                         if (options.get("vibration")) {
-                                            vibrator.vibrate((long) 75);
+                                            vibrator.vibrate(other_beat);
                                         }
                                     }
 

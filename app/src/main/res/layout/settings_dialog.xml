@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingBottom="15dp">
@@ -27,6 +27,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:background="@drawable/popup_background"
         android:backgroundTint="@color/settings_dialog_bg"
         android:orientation="vertical"
@@ -48,17 +49,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
+            android:animateLayoutChanges="true"
             android:foreground="@drawable/rounded_corner"
             android:foregroundTint="@color/settings_dialog_bg"
             android:orientation="vertical">
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
                     android:gravity="left|center_vertical"
                     android:orientation="vertical">
 
@@ -184,37 +188,30 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:animateLayoutChanges="true"
                             android:orientation="vertical">
 
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/welcome_layout"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:animateLayoutChanges="true"
                                 android:background="?selectableItemBackground"
                                 android:clickable="true"
                                 android:focusable="true"
-                                android:gravity="center_vertical">
+                                android:gravity="center|left">
 
                                 <LinearLayout
-                                    android:id="@+id/welcome_text"
-                                    android:layout_width="0dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="24dp"
                                     android:layout_marginVertical="13dp"
-                                    android:orientation="vertical"
-                                    app:layout_constrainedWidth="true"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toStartOf="@id/welcome_divider"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent">
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
                                     <com.google.android.material.textview.MaterialTextView
                                         style="?android:attr/textAppearanceLarge"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:ellipsize="marquee"
-                                        android:fadingEdge="horizontal"
-                                        android:singleLine="true"
                                         android:text="@string/vibration"
                                         android:textSize="18sp" />
 
@@ -227,28 +224,79 @@
                                 </LinearLayout>
 
                                 <View
-                                    android:id="@+id/welcome_divider"
                                     android:layout_width="1dp"
                                     android:layout_height="30dp"
                                     android:layout_marginTop="20dp"
                                     android:layout_marginBottom="20dp"
-                                    android:background="#4D808080"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toStartOf="@id/vib_switch"
-                                    app:layout_constraintStart_toEndOf="@id/welcome_text"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    android:background="#4D808080" />
 
                                 <com.google.android.material.switchmaterial.SwitchMaterial
                                     android:id="@+id/vib_switch"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="14dp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toEndOf="@id/welcome_divider"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    android:layout_marginHorizontal="14dp" />
 
-                            </androidx.constraintlayout.widget.ConstraintLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/vib_expand"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:gravity="center|left"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="24dp"
+                                    android:gravity="center|left"
+                                    android:orientation="vertical">
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        style="?android:attr/textAppearanceSmall"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="First Beat" />
+
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        style="?android:attr/textAppearanceSmall"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Other Beats" />
+
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="10dp"
+                                    android:gravity="center|left"
+                                    android:orientation="vertical">
+
+
+                                    <androidx.appcompat.widget.AppCompatSeekBar
+                                        android:id="@+id/other_beat_bar"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginVertical="2dp" />
+
+                                    <androidx.appcompat.widget.AppCompatSeekBar
+                                        android:id="@+id/first_beat_bar"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginVertical="2dp" />
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
 
                             <View
                                 android:layout_width="match_parent"
@@ -257,35 +305,27 @@
                                 android:layout_marginEnd="22dp"
                                 android:background="#4D808080" />
 
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/catcher_layout"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:animateLayoutChanges="true"
                                 android:background="?selectableItemBackground"
                                 android:clickable="true"
                                 android:focusable="true"
-                                android:gravity="center_vertical">
+                                android:gravity="center|left">
 
                                 <LinearLayout
-                                    android:id="@+id/catcher_text"
-                                    android:layout_width="0dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="24dp"
                                     android:layout_marginVertical="13dp"
-                                    android:orientation="vertical"
-                                    app:layout_constrainedWidth="true"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toStartOf="@id/catcher_divider"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent">
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
                                     <com.google.android.material.textview.MaterialTextView
                                         style="?android:attr/textAppearanceLarge"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:ellipsize="marquee"
-                                        android:fadingEdge="horizontal"
-                                        android:singleLine="true"
                                         android:text="@string/sound"
                                         android:textSize="18sp" />
 
@@ -298,28 +338,20 @@
                                 </LinearLayout>
 
                                 <View
-                                    android:id="@+id/catcher_divider"
                                     android:layout_width="1dp"
                                     android:layout_height="30dp"
                                     android:layout_marginTop="20dp"
                                     android:layout_marginBottom="20dp"
-                                    android:background="#4D808080"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toStartOf="@id/sound_switch"
-                                    app:layout_constraintStart_toEndOf="@id/catcher_text"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    android:background="#4D808080" />
 
                                 <com.google.android.material.switchmaterial.SwitchMaterial
                                     android:id="@+id/sound_switch"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="14dp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toEndOf="@id/catcher_divider"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    android:layout_marginHorizontal="14dp" />
 
-                            </androidx.constraintlayout.widget.ConstraintLayout>
+                            </LinearLayout>
+
 
                         </LinearLayout>
 
