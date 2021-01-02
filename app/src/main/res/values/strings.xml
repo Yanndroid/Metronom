@@ -22,4 +22,10 @@
     <string name="never">Never</string>
     <string name="need_restart">Need to restart to apply language</string>
     <string name="ok">Ok</string>
+    <string name="download_latest_apk">Download latest Apk</string>
+    <string name="sound_2">Sound 2</string>
+    <string name="sound_1">Sound 1</string>
+    <string name="other_beats">Other Beats</string>
+    <string name="first_beat">First Beat</string>
+    <string name="metronome_apk">Metronome Apk</string>
 </resources>

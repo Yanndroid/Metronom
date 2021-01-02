@@ -246,14 +246,14 @@
                                         style="?android:attr/textAppearanceSmall"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="First Beat" />
+                                        android:text="@string/first_beat" />
 
 
                                     <com.google.android.material.textview.MaterialTextView
                                         style="?android:attr/textAppearanceSmall"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Other Beats" />
+                                        android:text="@string/other_beats" />
 
 
                                 </LinearLayout>
@@ -354,14 +354,14 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="Sound 1" />
+                                        android:text="@string/sound_1" />
 
                                     <com.google.android.material.radiobutton.MaterialRadioButton
                                         android:id="@+id/sound_mode_2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="Sound 2" />
+                                        android:text="@string/sound_2" />
 
 
                                 </RadioGroup>
@@ -492,7 +492,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Download latest Apk"
+                                android:text="@string/download_latest_apk"
                                 android:textSize="18sp" />
 
                             <ImageView

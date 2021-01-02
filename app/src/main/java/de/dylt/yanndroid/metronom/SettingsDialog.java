@@ -276,8 +276,7 @@ public class SettingsDialog extends BottomSheetDialogFragment {
                 DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
                 Uri uri = Uri.parse("https://github.com/Yanndroid/Metronom/raw/master/app/release/app-release.apk");
                 DownloadManager.Request request = new DownloadManager.Request(uri);
-                request.setTitle("Metronome Apk");
-                //request.setDescription("Downloading");
+                request.setTitle(getString(R.string.metronome_apk));
                 request.setVisibleInDownloadsUi(true);
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "Metronome.apk");
