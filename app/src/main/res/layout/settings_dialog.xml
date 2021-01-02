@@ -184,7 +184,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:animateLayoutChanges="false"
+                            android:animateLayoutChanges="true"
                             android:orientation="vertical">
 
                             <LinearLayout
@@ -268,14 +268,14 @@
 
 
                                     <androidx.appcompat.widget.AppCompatSeekBar
-                                        android:id="@+id/other_beat_bar"
+                                        android:id="@+id/first_beat_bar"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:layout_marginVertical="2dp" />
 
                                     <androidx.appcompat.widget.AppCompatSeekBar
-                                        android:id="@+id/first_beat_bar"
+                                        android:id="@+id/other_beat_bar"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
