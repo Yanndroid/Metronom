@@ -16,8 +16,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 
@@ -65,7 +67,6 @@ public class SettingsDialog extends BottomSheetDialogFragment {
     public void initSettings(Dialog dialog) {
         SharedPreferences sharedPreferences;
         sharedPreferences = getContext().getSharedPreferences("settings", Activity.MODE_PRIVATE);
-        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
 
         /** language_spinner */
@@ -228,10 +229,13 @@ public class SettingsDialog extends BottomSheetDialogFragment {
 
         /** switches */
 
-        LinearLayout vib_expand = dialog.findViewById(R.id.vib_expand);
+
         HashMap<Boolean, Integer> visibility = new HashMap<>();
         visibility.put(true, View.VISIBLE);
         visibility.put(false, View.GONE);
+
+
+        LinearLayout vib_expand = dialog.findViewById(R.id.vib_expand);
 
         SwitchMaterial vib_switch = dialog.findViewById(R.id.vib_switch);
         vib_switch.setChecked(sharedPreferences.getBoolean("vib_switch", false));
@@ -246,12 +250,19 @@ public class SettingsDialog extends BottomSheetDialogFragment {
             }
         });
 
+        LinearLayout sound_expand = dialog.findViewById(R.id.sound_expand);
+
+
         SwitchMaterial sound_switch = dialog.findViewById(R.id.sound_switch);
         sound_switch.setChecked(sharedPreferences.getBoolean("sound_switch", false));
+
+        sound_expand.setVisibility(visibility.get(sharedPreferences.getBoolean("sound_switch", false)));
+
         sound_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 sharedPreferences.edit().putBoolean("sound_switch", isChecked).commit();
+                sound_expand.setVisibility(visibility.get(isChecked));
             }
         });
 
@@ -278,6 +289,8 @@ public class SettingsDialog extends BottomSheetDialogFragment {
 
         /** Vibration_menu */
         SeekBar first_beat_bar = dialog.findViewById(R.id.first_beat_bar);
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+
 
         first_beat_bar.setMax(300);
         first_beat_bar.setMin(30);
@@ -318,6 +331,31 @@ public class SettingsDialog extends BottomSheetDialogFragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 vibrator.vibrate(seekBar.getProgress());
+            }
+        });
+
+
+        /** Sound menu */
+
+        RadioButton sound_mode_1 = dialog.findViewById(R.id.sound_mode_1);
+        RadioButton sound_mode_2 = dialog.findViewById(R.id.sound_mode_2);
+
+        sound_mode_1.setChecked(sharedPreferences.getBoolean("sound_mode_1", true));
+        sound_mode_2.setChecked(!sharedPreferences.getBoolean("sound_mode_1", true));
+
+
+        sound_mode_1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                sharedPreferences.edit().putBoolean("sound_mode_1", isChecked).commit();
+            }
+        });
+
+        ImageView test_sound = dialog.findViewById(R.id.test_sound);
+        test_sound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.playSounds();
             }
         });
 

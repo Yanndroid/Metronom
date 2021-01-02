@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
@@ -181,9 +182,9 @@
                         android:layout_height="wrap_content">
 
                         <LinearLayout
-                            android:animateLayoutChanges="true"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:animateLayoutChanges="false"
                             android:orientation="vertical">
 
                             <LinearLayout
@@ -217,12 +218,6 @@
 
                                 </LinearLayout>
 
-                                <View
-                                    android:layout_width="1dp"
-                                    android:layout_height="30dp"
-                                    android:layout_marginTop="20dp"
-                                    android:layout_marginBottom="20dp"
-                                    android:background="#4D808080" />
 
                                 <com.google.android.material.switchmaterial.SwitchMaterial
                                     android:id="@+id/vib_switch"
@@ -330,18 +325,60 @@
 
                                 </LinearLayout>
 
-                                <View
-                                    android:layout_width="1dp"
-                                    android:layout_height="30dp"
-                                    android:layout_marginTop="20dp"
-                                    android:layout_marginBottom="20dp"
-                                    android:background="#4D808080" />
 
                                 <com.google.android.material.switchmaterial.SwitchMaterial
                                     android:id="@+id/sound_switch"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="14dp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/sound_expand"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="24dp"
+                                android:layout_marginBottom="10dp"
+                                android:gravity="center|left"
+                                android:orientation="horizontal">
+
+                                <RadioGroup
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/sound_mode_1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Sound 1" />
+
+                                    <com.google.android.material.radiobutton.MaterialRadioButton
+                                        android:id="@+id/sound_mode_2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Sound 2" />
+
+
+                                </RadioGroup>
+
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginRight="15dp"
+                                    android:background="#4D808080" />
+
+
+                                <ImageView
+                                    android:id="@+id/test_sound"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_volume"
+                                    app:tint="@color/blue" />
 
                             </LinearLayout>
 

@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.CheckBox;
@@ -36,13 +37,22 @@ public class MainActivity extends AppCompatActivity {
 
     Timer timer;
     Vibrator vibrator;
-    SoundPool soundPool;
+    static SoundPool soundPool;
+    static HashMap<Integer, Integer> soundModes = new HashMap<>();
     int firstSound;
     int othersSound;
 
     int beatcounter;
-    SharedPreferences sharedPreferences;
+    static SharedPreferences sharedPreferences;
 
+    public static void setLocale(Activity activity, String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+        Resources resources = activity.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +75,12 @@ public class MainActivity extends AppCompatActivity {
         beatcounter = 0;
         counter = findViewById(R.id.counter);
         soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
-        firstSound = soundPool.load(getBaseContext(), R.raw.first, 1);
-        othersSound = soundPool.load(getBaseContext(), R.raw.others, 1);
+
+        soundModes.put(1, soundPool.load(getBaseContext(), R.raw.mode_1_first, 1));
+        soundModes.put(2, soundPool.load(getBaseContext(), R.raw.mode_1_others, 1));
+        soundModes.put(3, soundPool.load(getBaseContext(), R.raw.mode_2_first, 1));
+        soundModes.put(4, soundPool.load(getBaseContext(), R.raw.mode_2_others, 1));
+
         timer = new Timer();
 
 
@@ -113,6 +127,15 @@ public class MainActivity extends AppCompatActivity {
 
                     int first_beat = sharedPreferences.getInt("first_beat", 150);
                     int other_beat = sharedPreferences.getInt("other_beat", 75);
+
+
+                    if (sharedPreferences.getBoolean("sound_mode_1", true)) {
+                        firstSound = soundModes.get(1);
+                        othersSound = soundModes.get(2);
+                    } else {
+                        firstSound = soundModes.get(3);
+                        othersSound = soundModes.get(4);
+                    }
 
 
                     timer.scheduleAtFixedRate(new TimerTask() {
@@ -220,13 +243,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static void setLocale(Activity activity, String languageCode) {
-        Locale locale = new Locale(languageCode);
-        Locale.setDefault(locale);
-        Resources resources = activity.getResources();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
+    public static void playSounds() {
+        if (sharedPreferences.getBoolean("sound_mode_1", true)) {
+            soundPool.play(soundModes.get(1), 1, 1, 0, 0, 1);
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    soundPool.play(soundModes.get(2), 1, 1, 0, 0, 1);
+                }
+            }, 500);
+        } else {
+            soundPool.play(soundModes.get(3), 1, 1, 0, 0, 1);
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    soundPool.play(soundModes.get(4), 1, 1, 0, 0, 1);
+                }
+            }, 500);
+        }
     }
-
 }
